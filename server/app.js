@@ -15,7 +15,7 @@ const redis = require('redis');
 
 const port = process.env.PORT || process.env.NODE_ENV || 3000;
 
-const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/DomoMaker';
+const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/Proj3';
 
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -61,7 +61,7 @@ app.use(session({
   store: new RedisStore({
     client: redisClient,
   }),
-  secret: 'Domo Arigato',
+  secret: 'Open Sesame',
   resave: true,
   saveUninitialized: true,
   cookie: {

@@ -1,8 +1,6 @@
 const handleDomo = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'}, 350);
-
     if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
@@ -37,8 +35,6 @@ const DomoForm = (props) => {
 
 const handleEditDomo = (e, domoId) => {
     e.preventDefault();
-
-    $("#domoMessage").animate({width:'hide'}, 350);
 
     if ($(`${"#editDomoForm_" + domoId} #domoName`).val() == '' || $(`${"#editDomoForm_" + domoId} #domoAge`).val() == '') {
         handleError("RAWR! All fields are required");

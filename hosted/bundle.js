@@ -24,9 +24,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var handleDomo = function handleDomo(e) {
   e.preventDefault();
-  $("#domoMessage").animate({
-    width: 'hide'
-  }, 350);
 
   if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
     handleError("RAWR! All fields are required");
@@ -78,9 +75,6 @@ var DomoForm = function DomoForm(props) {
 
 var handleEditDomo = function handleEditDomo(e, domoId) {
   e.preventDefault();
-  $("#domoMessage").animate({
-    width: 'hide'
-  }, 350);
 
   if ($("".concat("#editDomoForm_" + domoId, " #domoName")).val() == '' || $("".concat("#editDomoForm_" + domoId, " #domoAge")).val() == '') {
     handleError("RAWR! All fields are required");
@@ -273,15 +267,10 @@ $(document).ready(function () {
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
-  $("#domoMessage").animate({
-    width: 'toggle'
-  }, 350);
+  alert(message);
 };
 
 var redirect = function redirect(response) {
-  $("domoMessage").animate({
-    width: 'hide'
-  }, 350);
   window.location = response.redirect;
 };
 

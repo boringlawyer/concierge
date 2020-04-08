@@ -12,6 +12,8 @@ const router = (app) => {
   app.post('/maker', middleware.requiresLogin, controllers.Domo.make);
   app.post('/editDomo', middleware.requiresLogin, controllers.Domo.editDomo);
   app.get('/', middleware.requiresSecure, middleware.requiresLogout, controllers.Account.loginPage);
+  app.post('/createConversation', middleware.requiresLogin, controllers.Conversation.createConversation);
+  app.get('/getConversations', middleware.requiresLogin, controllers.Conversation.getConversations);
 };
 
 module.exports = router;

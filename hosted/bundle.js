@@ -1,5 +1,7 @@
 "use strict";
 
+var _this2 = void 0;
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,236 +24,134 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var handleDomo = function handleDomo(e) {
-  e.preventDefault();
-
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
-    handleError("RAWR! All fields are required");
-    return false;
-  }
-
-  sendAjax('POST', $("domoForm").attr("action"), $("#domoForm").serializeArray(), function () {
-    loadDomosFromServer();
-  });
-  return false;
+var Conversation = function Conversation(props) {
+  return /*#__PURE__*/React.createElement("h3", null, props.title);
 };
 
-var DomoForm = function DomoForm(props) {
-  return /*#__PURE__*/React.createElement("form", {
-    id: "domoForm",
-    onSubmit: handleDomo,
-    name: "domoForm",
-    action: "/maker",
-    method: "POST",
-    className: "domoForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "name"
-  }, "Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoName",
-    type: "text",
-    name: "name",
-    placeHolder: "Domo Name"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "age"
-  }, "Age: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoAge",
-    type: "text",
-    name: "age",
-    placeHolder: "Domo Age"
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "hidden",
-    name: "_csrf",
-    value: props.csrf
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "hidden",
-    name: "domoId",
-    value: props._id
-  }), /*#__PURE__*/React.createElement("input", {
-    className: "makeDomoSubmit",
-    type: "submit",
-    value: "Make Domo"
-  }));
-};
+var NewConversation = /*#__PURE__*/function (_React$Component) {
+  _inherits(NewConversation, _React$Component);
 
-var handleEditDomo = function handleEditDomo(e, domoId) {
-  e.preventDefault();
+  var _super = _createSuper(NewConversation);
 
-  if ($("".concat("#editDomoForm_" + domoId, " #domoName")).val() == '' || $("".concat("#editDomoForm_" + domoId, " #domoAge")).val() == '') {
-    handleError("RAWR! All fields are required");
-    return false;
-  }
-
-  var test = $("".concat("#editDomoForm_" + domoId));
-  var testg = test.serializeArray();
-  sendAjax('POST', $("".concat("#editDomoForm_" + domoId)).attr("action"), $("".concat("#editDomoForm_" + domoId)).serializeArray(), loadDomosFromServer);
-  return false;
-};
-
-var EditDomoForm = function EditDomoForm(props) {
-  return /*#__PURE__*/React.createElement("form", {
-    id: "editDomoForm_" + props.domoId // with help from https://stackoverflow.com/questions/44917513/passing-an-additional-parameter-with-an-onchange-event
-    ,
-    onSubmit: function onSubmit(e) {
-      return handleEditDomo(e, props.domoId);
-    },
-    name: "editDomoForm",
-    action: "/editDomo",
-    method: "POST",
-    className: "domoForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "name"
-  }, "New Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoName",
-    type: "text",
-    name: "name",
-    placeHolder: "Domo Name"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "age"
-  }, "New Age: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoAge",
-    type: "text",
-    name: "age",
-    placeHolder: "Domo Age"
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "hidden",
-    name: "_csrf",
-    value: props.csrf
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "hidden",
-    name: "_id",
-    value: props.domoId
-  }), /*#__PURE__*/React.createElement("input", {
-    className: "makeDomoSubmit",
-    type: "submit",
-    value: "Edit Domo"
-  }));
-};
-
-var DomoList = /*#__PURE__*/function (_React$Component) {
-  _inherits(DomoList, _React$Component);
-
-  var _super = _createSuper(DomoList);
-
-  function DomoList(props) {
+  function NewConversation(props) {
     var _this;
 
-    _classCallCheck(this, DomoList);
+    _classCallCheck(this, NewConversation);
 
     _this = _super.call(this, props);
     _this.state = {
-      isBeingEdited: false
+      canShow: false,
+      csrf: props.csrf
     };
+    _this.show = _this.show.bind(_assertThisInitialized(_this));
+    _this.hide = _this.hide.bind(_assertThisInitialized(_this));
+    _this.handleNewConversation = _this.handleNewConversation.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  _createClass(DomoList, [{
-    key: "render",
-    value: function render() {
-      if (this.props.domos.length === 0) {
-        return /*#__PURE__*/React.createElement("div", {
-          className: "domoList"
-        }, /*#__PURE__*/React.createElement("h3", {
-          className: "emptyDomo"
-        }, "No Domos yet"));
+  _createClass(NewConversation, [{
+    key: "show",
+    value: function show() {
+      this.setState({
+        canShow: true
+      });
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.setState({
+        canShow: false
+      });
+    }
+  }, {
+    key: "handleNewConversation",
+    value: function handleNewConversation(e) {
+      e.preventDefault();
+
+      if ($("#convoTitle").val() == '') {
+        alert("Must enter a title");
+        return;
       }
 
-      var domoNodes = this.props.domos.map(function (domo) {
-        return (
-          /*#__PURE__*/
-          // <div key={domo._id} className="domo">
-          //     <img src = "/assets/img/domoface.jpeg" alt = "Domo face" className="domoFace" />
-          //     <h3 className="domoName">Name: {domo.name}</h3>
-          //     <h3 className="domoAge">Age: {domo.age}</h3>
-          //     <button onClick = {this.toggleIsBeingEdited}>Edit</button>
-          // </div>
-          React.createElement(DomoItem, {
-            _id: domo._id,
-            name: domo.name,
-            age: domo.age
-          })
-        );
-      }, this);
-      return /*#__PURE__*/React.createElement("div", {
-        className: "domoList"
-      }, domoNodes);
-    }
-  }]);
-
-  return DomoList;
-}(React.Component);
-
-;
-
-var DomoItem = /*#__PURE__*/function (_React$Component2) {
-  _inherits(DomoItem, _React$Component2);
-
-  var _super2 = _createSuper(DomoItem);
-
-  function DomoItem(props) {
-    var _this2;
-
-    _classCallCheck(this, DomoItem);
-
-    _this2 = _super2.call(this, props);
-    _this2.state = {
-      isBeingEdited: false
-    };
-    _this2.toggleIsBeingEdited = _this2.toggleIsBeingEdited.bind(_assertThisInitialized(_this2));
-    return _this2;
-  }
-
-  _createClass(DomoItem, [{
-    key: "toggleIsBeingEdited",
-    value: function toggleIsBeingEdited() {
-      this.setState(function (state, props) {
-        return {
-          isBeingEdited: !state.isBeingEdited
-        };
-      });
+      var test = $("#newConvoForm").serializeArray();
+      sendAjax('POST', '/createConversation', test, loadConversations);
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-        key: this.props._id,
-        className: "domo"
-      }, /*#__PURE__*/React.createElement("img", {
-        src: "/assets/img/domoface.jpeg",
-        alt: "Domo face",
-        className: "domoFace"
-      }), /*#__PURE__*/React.createElement("h3", {
-        className: "domoName"
-      }, "Name: ", this.props.name), /*#__PURE__*/React.createElement("h3", {
-        className: "domoAge"
-      }, "Age: ", this.props.age), /*#__PURE__*/React.createElement("button", {
-        onClick: this.toggleIsBeingEdited
-      }, "Edit")), this.state.isBeingEdited ? /*#__PURE__*/React.createElement(EditDomoForm, {
-        csrf: DomoItem.csrf || '',
-        domoId: this.props._id
-      }) : '');
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Button, {
+        variant: "primary",
+        onClick: this.show
+      }, "+"), /*#__PURE__*/React.createElement(Modal, {
+        show: this.state.canShow,
+        onHide: this.hide
+      }, /*#__PURE__*/React.createElement(Modal.Header, {
+        closeButton: true
+      }, /*#__PURE__*/React.createElement(Modal.Title, null, "New Conversation")), /*#__PURE__*/React.createElement(Modal.Body, null, /*#__PURE__*/React.createElement(Form, {
+        id: "newConvoForm",
+        onSubmit: this.handleNewConversation
+      }, /*#__PURE__*/React.createElement(Form.Group, {
+        controlId: "convoTitle"
+      }, /*#__PURE__*/React.createElement(Form.Label, null, "Title: "), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "text",
+        name: "title"
+      }), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "hidden",
+        name: "_csrf",
+        value: this.state.csrf
+      }), /*#__PURE__*/React.createElement(Button, {
+        variant: "primary",
+        type: "submit"
+      }, "Create"))))));
     }
   }]);
 
-  return DomoItem;
+  return NewConversation;
 }(React.Component);
 
-var loadDomosFromServer = function loadDomosFromServer() {
-  sendAjax('GET', '/getDomos', null, function (data) {
-    ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
-      domos: data.domos
-    }), document.querySelector("#domos"));
+var ConversationList = function ConversationList(props) {
+  if (props.convos.length === 0) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "convoList"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "emptyList"
+    }, "No Conversations yet"), /*#__PURE__*/React.createElement(NewConversation, {
+      csrf: props.csrf
+    }));
+  }
+
+  var convoNodes = props.convos.map(function (c) {
+    return (
+      /*#__PURE__*/
+      // <div key={domo._id} className="domo">
+      //     <img src = "/assets/img/domoface.jpeg" alt = "Domo face" className="domoFace" />
+      //     <h3 className="domoName">Name: {domo.name}</h3>
+      //     <h3 className="domoAge">Age: {domo.age}</h3>
+      //     <button onClick = {this.toggleIsBeingEdited}>Edit</button>
+      // </div>
+      React.createElement(Conversation, {
+        title: c.title
+      })
+    );
+  }, _this2);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "convoList"
+  }, convoNodes, /*#__PURE__*/React.createElement(NewConversation, {
+    csrf: props.csrf
+  }));
+};
+
+var loadConversations = function loadConversations(csrf) {
+  sendAjax('GET', '/getConversations', null, function (data) {
+    ReactDOM.render( /*#__PURE__*/React.createElement(ConversationList, {
+      convos: data.convos,
+      csrf: csrf
+    }), document.querySelector("#convos"));
   });
 };
 
 var setup = function setup(csrf) {
-  DomoItem.csrf = csrf;
-  ReactDOM.render( /*#__PURE__*/React.createElement(DomoForm, {
-    csrf: csrf
-  }), document.querySelector("#makeDomo"));
-  ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
-    domos: []
-  }), document.querySelector("#domos"));
-  loadDomosFromServer();
+  loadConversations(csrf);
 };
 
 var getToken = function getToken() {

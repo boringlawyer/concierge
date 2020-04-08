@@ -16,6 +16,11 @@ const MessageSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         required: true,
         ref: 'Account'
+    },
+    convo: {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        ref: 'Conversation'
     }
 })
 

@@ -6,8 +6,8 @@ const _ = require('underscore');
 let ConversationModel = {};
 
 let ConversationSchema = new mongoose.Schema({
-    messages: {
-        type: Array,
+    title: {
+        type: String,
         required: true
     },
     owner: {
@@ -16,6 +16,13 @@ let ConversationSchema = new mongoose.Schema({
         ref: 'Account'
     }
 });
+
+ConversationSchema.statics.findByOwner = (owner, callback) => {
+    let search = {
+        owner
+    };
+    return ConversationModel.find(search).exec(callback);
+}
 
 ConversationModel = mongoose.model('Conversation', ConversationSchema);
 

@@ -3,7 +3,10 @@
   <meta charset="utf-8"/>
   <title>Concierge</title>
   <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
+  <script>var Button = ReactBootstrap.Button; var Form = ReactBootstrap.Form; var Modal = ReactBootstrap.Modal;</script>
   <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -15,10 +18,7 @@
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
     <div class="navlink"><a href="/logout">Log out</a></div>
   </nav>
-  <section id="makeDomo">
-  </section>
-  <section id="domos">
-  </section>
-  <script src="/assets/bundle.js"></script>
+  <section id="convos"></section>
+    <script src="/assets/bundle.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ const router = (app) => {
   app.get('/', middleware.requiresSecure, middleware.requiresLogout, controllers.Account.loginPage);
   app.post('/createConversation', middleware.requiresLogin, controllers.Conversation.createConversation);
   app.get('/getConversations', middleware.requiresLogin, controllers.Conversation.getConversations);
+  app.get('/chat', middleware.requiresLogin, controllers.Conversation.chatPage);
 };
 
 module.exports = router;

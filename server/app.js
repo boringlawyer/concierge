@@ -90,6 +90,14 @@ http.listen(port, (err) => {
   console.log(`Listening on port ${port}`);
 });
 
-io.on('connection', () => {
-  console.log('User connected')
+
+let messages = [];
+io.on('connection', (socket) => {
+  console.log('User connected');
+  socket.emit('loadMsgs', messages);
+  socket.on('message', (message) => {
+    console.log(message);
+    messages.push(message);
+    io.emit('updateMsgs', message);
+  })
 })

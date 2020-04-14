@@ -8,21 +8,21 @@ let MessageModel = {};
 const convertId = mongoose.Types.ObjectId;
 
 const MessageSchema = new mongoose.Schema({
-    text: {
-        type: String,
-        required: true,
-    },
-    owner: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'Account'
-    },
-    convo: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'Conversation'
-    }
-})
+  text: {
+    type: String,
+    required: true,
+  },
+  owner: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: 'Account',
+  },
+  convo: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: 'Conversation',
+  },
+});
 
 MessageModel = mongoose.model('Message', MessageSchema);
 

@@ -242,3 +242,9 @@ h3.domoAge {
 .domo:last-child {
     margin-bottom:10px;
 }
+
+#messageBox {
+    position: sticky;
+    padding-top: 90vh;
+    bottom: 0;
+}

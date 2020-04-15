@@ -28,11 +28,10 @@ const AccountSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  numDomos: {
-    type: Number,
-    default: 0,
+  isAdmin: {
+    type: Boolean,
+    default: false,
     required: true,
-    min: 0,
   },
 });
 

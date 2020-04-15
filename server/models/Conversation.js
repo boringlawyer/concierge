@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Message = require('./Message');
 
 mongoose.Promise = global.Promise;
 const _ = require('underscore');
@@ -15,6 +16,10 @@ const ConversationSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Account',
   },
+  messages: {
+    type: Array,
+    required: true,
+  },
 });
 
 ConversationSchema.statics.findByOwner = (owner, callback) => {
@@ -23,6 +28,23 @@ ConversationSchema.statics.findByOwner = (owner, callback) => {
   };
   return ConversationModel.find(search).exec(callback);
 };
+
+ConversationSchema.method('addMessage', function (message) {
+  const thisConversation = this;
+  const messageData = {
+    text: message,
+    convo: this._id,
+  };
+
+  const newMessage = new Message.MessageModel(messageData);
+
+  const saveMessagePromise = newMessage.save();
+  return saveMessagePromise.then(() => {
+    thisConversation.messages.push(newMessage);
+    const saveConverationPromise = thisConversation.save();
+    return saveConverationPromise;
+  });
+});
 
 ConversationModel = mongoose.model('Conversation', ConversationSchema);
 

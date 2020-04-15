@@ -25,7 +25,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var Conversation = function Conversation(props) {
-  return /*#__PURE__*/React.createElement("h3", null, props.title);
+  return /*#__PURE__*/React.createElement("a", {
+    href: "/chat/".concat(props.link)
+  }, /*#__PURE__*/React.createElement("h3", null, props.title));
 };
 
 var NewConversation = /*#__PURE__*/function (_React$Component) {
@@ -121,18 +123,10 @@ var ConversationList = function ConversationList(props) {
   }
 
   var convoNodes = props.convos.map(function (c) {
-    return (
-      /*#__PURE__*/
-      // <div key={domo._id} className="domo">
-      //     <img src = "/assets/img/domoface.jpeg" alt = "Domo face" className="domoFace" />
-      //     <h3 className="domoName">Name: {domo.name}</h3>
-      //     <h3 className="domoAge">Age: {domo.age}</h3>
-      //     <button onClick = {this.toggleIsBeingEdited}>Edit</button>
-      // </div>
-      React.createElement(Conversation, {
-        title: c.title
-      })
-    );
+    return /*#__PURE__*/React.createElement(Conversation, {
+      title: c.title,
+      link: c._id
+    });
   }, _this2);
   return /*#__PURE__*/React.createElement("div", {
     className: "convoList"

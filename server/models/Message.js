@@ -12,11 +12,6 @@ const MessageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: {
-    type: mongoose.Schema.ObjectId,
-    required: true,
-    ref: 'Account',
-  },
   convo: {
     type: mongoose.Schema.ObjectId,
     required: true,

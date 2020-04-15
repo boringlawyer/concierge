@@ -1,8 +1,10 @@
 const Conversation = (props) => {
     return (
-        <h3>
-            {props.title}
-        </h3>
+        <a href = {`/chat/${props.link}`}>
+            <h3>
+                {props.title}
+            </h3>
+        </a>
     )
 }
 
@@ -73,13 +75,7 @@ const ConversationList = (props) => {
     
         const convoNodes = props.convos.map(function(c) {
             return (
-                // <div key={domo._id} className="domo">
-                //     <img src = "/assets/img/domoface.jpeg" alt = "Domo face" className="domoFace" />
-                //     <h3 className="domoName">Name: {domo.name}</h3>
-                //     <h3 className="domoAge">Age: {domo.age}</h3>
-                //     <button onClick = {this.toggleIsBeingEdited}>Edit</button>
-                // </div>
-                <Conversation title = {c.title}/>
+                <Conversation title = {c.title} link = {c._id}/>
             );
         }, this);
 

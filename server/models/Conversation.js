@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Message = require('./Message');
 
 mongoose.Promise = global.Promise;
-const _ = require('underscore');
 
 let ConversationModel = {};
 

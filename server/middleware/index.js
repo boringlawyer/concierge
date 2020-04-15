@@ -24,12 +24,14 @@ const bybassSecure = (req, res, next) => {
   next();
 };
 
-const requiresValidConversation = (req, res, next) => models.Conversation.ConversationModel.findById(req.params.conversationId, (err, dbRes) => {
-  if (err || !res) {
-    return res.status(404).send('Sorry! That conversation does not exist');
-  }
-  next();
-});
+const requiresValidConversation = (req, res, next) => {
+  models.Conversation.ConversationModel.findById(req.params.conversationId, (err) => {
+    if (err || !res) {
+      return res.status(404).send('Sorry! That conversation does not exist');
+    }
+    return next();
+  });
+};
 
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;

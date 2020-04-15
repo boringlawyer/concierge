@@ -12,7 +12,6 @@ const RedisStore = require('connect-redis')(session);
 const url = require('url');
 const csrf = require('csurf');
 const redis = require('redis');
-const socketManager = require('./socket');
 
 const port = process.env.PORT || process.env.NODE_ENV || 3000;
 
@@ -49,6 +48,7 @@ const redisClient = redis.createClient({
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const socketManager = require('./socket');
 
 socketManager(io);
 const router = require('./router');

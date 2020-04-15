@@ -17,21 +17,21 @@ const createConversation = (req, res) => {
     res.json({ success: true });
   });
 
-  newConvoPromise.catch((e) => {
+  newConvoPromise.catch(() => {
     res.status(400).json({ error: 'An error occurred' });
   });
 };
 
-const getConversations = (req, res) => Conversation.ConversationModel.findByOwner(req.session.account._id, (err, docs) => {
-  if (err) {
-    return res.status(400).json({ error: 'An error occurred' });
-  }
-  return res.json({ convos: docs });
-});
+const getConversations = (req, res) => {
+  Conversation.ConversationModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    return res.json({ convos: docs });
+  });
+};
 
-const chatPage = (req, res) =>
-  // req.session.conversation = req.params.conversationId;
-  res.render('chat');
+const chatPage = (req, res) => res.render('chat');
 
 
 module.exports.createConversation = createConversation;

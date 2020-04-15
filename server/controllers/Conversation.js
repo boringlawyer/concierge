@@ -2,21 +2,6 @@ const models = require('../models');
 
 const { Conversation } = models;
 
-const sendMessage = (req, res) => {
-  req.body.message = `${req.body.message}`;
-  if (!req.body.message || req.body.message === '') {
-    res.status(400).json({ error: 'No message' });
-    return;
-  }
-  const newMessage = new models.Message.MessageModel({
-    text: req.body.message,
-    owner: req.session.account._id,
-    convo: req.session.convo._id,
-  });
-  newMessage.save().then(() => {
-
-  });
-};
 
 const createConversation = (req, res) => {
   const convoData = {
@@ -44,11 +29,11 @@ const getConversations = (req, res) => Conversation.ConversationModel.findByOwne
   return res.json({ convos: docs });
 });
 
-const chatPage = (req, res) => {
-  return res.render('chat');
-}
+const chatPage = (req, res) =>
+  // req.session.conversation = req.params.conversationId;
+  res.render('chat');
 
-module.exports.sendMessage = sendMessage;
+
 module.exports.createConversation = createConversation;
 module.exports.getConversations = getConversations;
 module.exports.chatPage = chatPage;

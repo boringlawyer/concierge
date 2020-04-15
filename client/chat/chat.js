@@ -1,4 +1,11 @@
-const socket = io();
+const conversationId = location.href.split('/')[4]
+
+const socket = io({
+    query: 
+    {
+        conversationId
+    }
+});
 
 socket.on('loadMsgs', (messages) => {
     for (let m of messages) {

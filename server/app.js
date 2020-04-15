@@ -12,6 +12,7 @@ const RedisStore = require('connect-redis')(session);
 const url = require('url');
 const csrf = require('csurf');
 const redis = require('redis');
+const socketManager = require('./socket');
 
 const port = process.env.PORT || process.env.NODE_ENV || 3000;
 
@@ -48,6 +49,8 @@ const redisClient = redis.createClient({
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+
+socketManager(io);
 const router = require('./router');
 
 
@@ -89,15 +92,3 @@ http.listen(port, (err) => {
   }
   console.log(`Listening on port ${port}`);
 });
-
-
-let messages = [];
-io.on('connection', (socket) => {
-  console.log('User connected');
-  socket.emit('loadMsgs', messages);
-  socket.on('message', (message) => {
-    console.log(message);
-    messages.push(message);
-    io.emit('updateMsgs', message);
-  })
-})

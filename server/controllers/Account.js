@@ -27,7 +27,7 @@ const login = (req, res) => {
 
     req.session.account = Account.AccountModel.toAPI(account);
 
-    return res.json({ redirect: `/${newAccount.isAdmin ? 'admin' : 'maker'}` });
+    return res.json({ redirect: `/${account.isAdmin ? 'admin' : 'maker'}` });
   });
 };
 
@@ -83,9 +83,59 @@ const adminPage = (req, res) => {
   res.render('admin');
 }
 
+const getUsersAndConversations = (req, res) => {
+  const search = {
+    isAdmin: false
+  }
+  let userPromise = models.Account.AccountModel.find(search, 'username');
+  return userPromise.then((accountDocs) => {
+    if (!accountDocs) {
+      return res.json({error: 'An error occurred'});   
+    }
+    return Promise.all(accountDocs.map(a => {
+      let convoPromise = models.Conversation.ConversationModel.findByOwner(a._id);
+      return convoPromise.then((convoDocs) => {
+        if (!convoDocs) {
+          return res.json({error: 'An error occurred'});   
+        }    
+        let convos = convoDocs.map(c => {
+          return {
+            title: c.title,
+            _id: c._id
+          }
+        });
+        return convos;
+      }).then((convos) => {
+        return {
+          name: a.username,
+          conversations: convos
+        }
+      })
+    })).then((promises) => {
+      return res.json(promises);
+    })
+  });
+}
+  // , (accountErr, accountDocs) => {
+  //   if (accountErr || !accountDocs) {
+  //     return res.json({error: 'An error occurred'});
+  //   }
+  //   return accountDocs.map((a) => {
+  //     models.Conversation.ConversationModel.findByOwner(a._id, (convoErr, convoDocs) => {
+  //       if (convoErr || !convoDocs) {
+  //         return res.json({error: 'An error occurred'});
+  //       }
+        
+  //     )
+  //   })
+  // })
+//   }
+// }
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.adminPage = adminPage;
+module.exports.getUsersAndConversations = getUsersAndConversations;

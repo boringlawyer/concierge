@@ -4,7 +4,7 @@ var handleLogin = function handleLogin(e) {
   e.preventDefault();
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
-    handleError("RAWR! Username or password is empty");
+    handleError("Username or password is empty");
     return false;
   }
 
@@ -17,7 +17,7 @@ var handleSignup = function handleSignup(e) {
   e.preventDefault();
 
   if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-    handleError("RAWR! All fields are required");
+    handleError("All fields are required");
     return false;
   }
 
@@ -92,6 +92,10 @@ var SignupWindow = function SignupWindow(props) {
     name: "_csrf",
     value: props.csrf
   }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "isAdmin",
+    value: props.isAdmin
+  }), /*#__PURE__*/React.createElement("input", {
     className: "formSubmit",
     type: "submit",
     value: "Sign in"
@@ -104,18 +108,25 @@ var createLoginWindow = function createLoginWindow(csrf) {
   }), document.querySelector("#content"));
 };
 
-var createSignupWindow = function createSignupWindow(csrf) {
+var createSignupWindow = function createSignupWindow(csrf, isAdmin) {
   ReactDOM.render( /*#__PURE__*/React.createElement(SignupWindow, {
-    csrf: csrf
+    csrf: csrf,
+    isAdmin: isAdmin
   }), document.querySelector("#content"));
 };
 
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
   var signupButton = document.querySelector("#signupButton");
+  var adminSignupButton = document.querySelector("#adminSignupButton");
   signupButton.addEventListener("click", function (e) {
     e.preventDefault();
-    createSignupWindow(csrf);
+    createSignupWindow(csrf, false);
+    return false;
+  });
+  adminSignupButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createSignupWindow(csrf, true);
     return false;
   });
   loginButton.addEventListener("click", function (e) {

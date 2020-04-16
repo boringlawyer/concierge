@@ -1,7 +1,5 @@
 "use strict";
 
-var _this2 = void 0;
-
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23,12 +21,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Conversation = function Conversation(props) {
-  return /*#__PURE__*/React.createElement("a", {
-    href: "/chat/".concat(props.link)
-  }, /*#__PURE__*/React.createElement("h3", null, props.title));
-};
 
 var NewConversation = /*#__PURE__*/function (_React$Component) {
   _inherits(NewConversation, _React$Component);
@@ -111,7 +103,7 @@ var NewConversation = /*#__PURE__*/function (_React$Component) {
   return NewConversation;
 }(React.Component);
 
-var ConversationList = function ConversationList(props) {
+var ConversationMenu = function ConversationMenu(props) {
   if (props.convos.length === 0) {
     return /*#__PURE__*/React.createElement("div", {
       className: "convoList"
@@ -122,22 +114,18 @@ var ConversationList = function ConversationList(props) {
     }));
   }
 
-  var convoNodes = props.convos.map(function (c) {
-    return /*#__PURE__*/React.createElement(Conversation, {
-      title: c.title,
-      link: c._id
-    });
-  }, _this2);
   return /*#__PURE__*/React.createElement("div", {
     className: "convoList"
-  }, convoNodes, /*#__PURE__*/React.createElement(NewConversation, {
+  }, /*#__PURE__*/React.createElement(ConversationList, {
+    convos: props.convos
+  }), /*#__PURE__*/React.createElement(NewConversation, {
     csrf: props.csrf
   }));
 };
 
 var loadConversations = function loadConversations(csrf) {
   sendAjax('GET', '/getConversations', null, function (data) {
-    ReactDOM.render( /*#__PURE__*/React.createElement(ConversationList, {
+    ReactDOM.render( /*#__PURE__*/React.createElement(ConversationMenu, {
       convos: data.convos,
       csrf: csrf
     }), document.querySelector("#convos"));
@@ -181,4 +169,20 @@ var sendAjax = function sendAjax(type, action, data, success) {
       handleError(messageObj.error);
     }
   });
+};
+
+var Conversation = function Conversation(props) {
+  return /*#__PURE__*/React.createElement("a", {
+    href: "/chat/".concat(props.link)
+  }, /*#__PURE__*/React.createElement("h3", null, props.title));
+};
+
+var ConversationList = function ConversationList(props) {
+  var nodes = props.convos.map(function (c) {
+    return /*#__PURE__*/React.createElement(Conversation, {
+      title: c.title,
+      link: c._id
+    });
+  });
+  return /*#__PURE__*/React.createElement(React.Fragment, null, nodes);
 };

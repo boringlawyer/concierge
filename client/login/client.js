@@ -1,7 +1,7 @@
 const handleLogin = (e) => {
     e.preventDefault();
     if ($("#user").val() == '' || $("#pass").val() == '') {
-        handleError("RAWR! Username or password is empty");
+        handleError("Username or password is empty");
         return false;
     }
 
@@ -15,7 +15,7 @@ const handleLogin = (e) => {
 const handleSignup = (e) => {
     e.preventDefault();
     if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-        handleError("RAWR! All fields are required");
+        handleError("All fields are required");
         return false;
     }
 
@@ -58,6 +58,7 @@ const SignupWindow = (props) => {
             <label htmlFor="pass2"></label>
             <input id="pass2" type="password" name="pass2" placeholder="retype password"></input>
             <input type="hidden" name="_csrf" value={props.csrf}></input>
+            <input type="hidden" name="isAdmin" value={props.isAdmin}></input>
             <input className="formSubmit" type="submit" value="Sign in" />
         </form>
     );
@@ -70,9 +71,9 @@ const createLoginWindow = (csrf) => {
     );
 };
 
-const createSignupWindow = (csrf) => {
+const createSignupWindow = (csrf, isAdmin) => {
     ReactDOM.render(
-        <SignupWindow csrf={csrf} />,
+        <SignupWindow csrf={csrf} isAdmin={isAdmin}/>,
         document.querySelector("#content")
     );
 };
@@ -80,10 +81,17 @@ const createSignupWindow = (csrf) => {
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");
+    const adminSignupButton = document.querySelector("#adminSignupButton");
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
-        createSignupWindow(csrf);
+        createSignupWindow(csrf, false);
+        return false;
+    });
+
+    adminSignupButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createSignupWindow(csrf, true);
         return false;
     });
 

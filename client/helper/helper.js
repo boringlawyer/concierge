@@ -21,3 +21,24 @@ const sendAjax = (type, action, data, success) => {
         }
     });
 };
+
+const Conversation = (props) => {
+    return (
+        <a href = {`/chat/${props.link}`}>
+            <h3>
+                {props.title}
+            </h3>
+        </a>
+    )
+}
+
+const ConversationList = (props) => {
+    let nodes = props.convos.map(c => {
+        return <Conversation title={c.title} link={c._id} />
+    });
+    return (
+        <>
+            {nodes}
+        </>
+    )
+}

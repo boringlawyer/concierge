@@ -1,14 +1,3 @@
-const Conversation = (props) => {
-    return (
-        <a href = {`/chat/${props.link}`}>
-            <h3>
-                {props.title}
-            </h3>
-        </a>
-    )
-}
-
-
 class NewConversation extends React.Component {
     constructor(props) {
         super(props);
@@ -63,7 +52,7 @@ class NewConversation extends React.Component {
     }
 }
 
-const ConversationList = (props) => {
+const ConversationMenu = (props) => {
         if (props.convos.length === 0) {
             return (
                 <div className="convoList">
@@ -73,25 +62,19 @@ const ConversationList = (props) => {
             );
         }
     
-        const convoNodes = props.convos.map(function(c) {
-            return (
-                <Conversation title = {c.title} link = {c._id}/>
-            );
-        }, this);
-
-    
         return (
             <div className="convoList">
-                {convoNodes}
+                <ConversationList convos={props.convos} />
                 <NewConversation csrf={props.csrf}/>
             </div>
         )
 };
 
+
 const loadConversations = (csrf) => {
     sendAjax('GET', '/getConversations', null, (data) => {
         ReactDOM.render(
-            <ConversationList convos={data.convos} csrf={csrf}/>, document.querySelector("#convos")
+            <ConversationMenu convos={data.convos} csrf={csrf}/>, document.querySelector("#convos")
         );
     });
 };

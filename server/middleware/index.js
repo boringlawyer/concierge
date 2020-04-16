@@ -33,6 +33,15 @@ const requiresValidConversation = (req, res, next) => {
   });
 };
 
+const requiresAdmin = (req, res, next) => {
+  if (req.session.account.isAdmin) {
+    return next();
+  }
+  else {
+    return res.status(404).send('Sorry! You have to be an admin to access this page');
+  }
+}
+
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;
 
@@ -43,3 +52,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports.requiresValidConversation = requiresValidConversation;
+module.exports.requiresAdmin = requiresAdmin;

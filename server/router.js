@@ -12,6 +12,7 @@ const router = (app) => {
   app.post('/createConversation', middleware.requiresLogin, controllers.Conversation.createConversation);
   app.get('/getConversations', middleware.requiresLogin, controllers.Conversation.getConversations);
   app.get('/chat/:conversationId', middleware.requiresLogin, middleware.requiresValidConversation, controllers.Conversation.chatPage);
+  app.get('/admin', middleware.requiresLogin, middleware.requiresAdmin, controllers.Account.adminPage);
 };
 
 module.exports = router;

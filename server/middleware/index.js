@@ -25,8 +25,8 @@ const bybassSecure = (req, res, next) => {
 };
 
 const requiresValidConversation = (req, res, next) => {
-  models.Conversation.ConversationModel.findById(req.params.conversationId, (err) => {
-    if (err || !res) {
+  models.Conversation.ConversationModel.findById(req.params.conversationId, (err, doc) => {
+    if (err || !doc) {
       return res.status(404).send('Sorry! That conversation does not exist');
     }
     return next();
@@ -40,7 +40,18 @@ const requiresAdmin = (req, res, next) => {
   else {
     return res.status(404).send('Sorry! You have to be an admin to access this page');
   }
-}
+};
+
+const requiresOwnerOrAdmin = (req, res, next) => {
+  models.Conversation.ConversationModel.findById(req.params.conversationId, (err, doc) => {
+    if (doc.owner._id.toString() === req.session.account._id || req.session.account.isAdmin) {
+      return next();
+    }
+    else {
+      return res.status(403).send('Sorry! You do not have permission');
+    }
+  })
+};
 
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;
@@ -53,3 +64,4 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports.requiresValidConversation = requiresValidConversation;
 module.exports.requiresAdmin = requiresAdmin;
+module.exports.requiresOwnerOrAdmin = requiresOwnerOrAdmin;

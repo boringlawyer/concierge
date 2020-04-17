@@ -11,7 +11,7 @@ const router = (app) => {
   app.get('/', middleware.requiresSecure, middleware.requiresLogout, controllers.Account.loginPage);
   app.post('/createConversation', middleware.requiresLogin, controllers.Conversation.createConversation);
   app.get('/getConversations', middleware.requiresLogin, controllers.Conversation.getConversations);
-  app.get('/chat/:conversationId', middleware.requiresLogin, middleware.requiresValidConversation, controllers.Conversation.chatPage);
+  app.get('/chat/:conversationId', middleware.requiresLogin, middleware.requiresValidConversation, middleware.requiresOwnerOrAdmin, controllers.Conversation.chatPage);
   app.get('/admin', middleware.requiresLogin, middleware.requiresAdmin, controllers.Account.adminPage);
   app.get('/getUsers', middleware.requiresLogin, middleware.requiresAdmin, controllers.Account.getUsersAndConversations);
 };

@@ -48,7 +48,7 @@ const signup = (req, res) => {
       username: req.body.username,
       salt,
       password: hash,
-      isAdmin: req.body.isAdmin
+      isAdmin: req.body.isAdmin,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -81,42 +81,36 @@ const getToken = (req, res) => {
 
 const adminPage = (req, res) => {
   res.render('admin');
-}
+};
 
 const getUsersAndConversations = (req, res) => {
   const search = {
-    isAdmin: false
-  }
-  let userPromise = models.Account.AccountModel.find(search, 'username');
+    isAdmin: false,
+  };
+  const userPromise = models.Account.AccountModel.find(search, 'username');
   return userPromise.then((accountDocs) => {
     if (!accountDocs) {
-      return res.json({error: 'An error occurred'});   
+      return res.json({ error: 'An error occurred' });
     }
-    return Promise.all(accountDocs.map(a => {
-      let convoPromise = models.Conversation.ConversationModel.findByOwner(a._id);
+    return Promise.all(accountDocs.map((a) => {
+      const convoPromise = models.Conversation.ConversationModel.findByOwner(a._id);
       return convoPromise.then((convoDocs) => {
         if (!convoDocs) {
-          return res.json({error: 'An error occurred'});   
-        }    
-        let convos = convoDocs.map(c => {
-          return {
-            title: c.title,
-            _id: c._id
-          }
-        });
-        return convos;
-      }).then((convos) => {
-        return {
-          name: a.username,
-          conversations: convos
+          return res.json({ error: 'An error occurred' });
         }
-      })
-    })).then((promises) => {
-      return res.json(promises);
-    })
+        const convos = convoDocs.map((c) => ({
+          title: c.title,
+          _id: c._id,
+        }));
+        return convos;
+      }).then((convos) => ({
+        name: a.username,
+        conversations: convos,
+      }));
+    })).then((promises) => res.json(promises));
   });
-}
-  // , (accountErr, accountDocs) => {
+};
+// , (accountErr, accountDocs) => {
   //   if (accountErr || !accountDocs) {
   //     return res.json({error: 'An error occurred'});
   //   }
@@ -125,10 +119,10 @@ const getUsersAndConversations = (req, res) => {
   //       if (convoErr || !convoDocs) {
   //         return res.json({error: 'An error occurred'});
   //       }
-        
-  //     )
-  //   })
-  // })
+
+//     )
+//   })
+// })
 //   }
 // }
 

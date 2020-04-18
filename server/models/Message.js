@@ -17,8 +17,8 @@ const MessageSchema = new mongoose.Schema({
   },
   senderName: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 MessageModel = mongoose.model('Message', MessageSchema);

@@ -37,9 +37,8 @@ const requiresAdmin = (req, res, next) => {
   if (req.session.account.isAdmin) {
     return next();
   }
-  else {
-    return res.status(404).send('Sorry! You have to be an admin to access this page');
-  }
+
+  return res.status(404).send('Sorry! You have to be an admin to access this page');
 };
 
 const requiresOwnerOrAdmin = (req, res, next) => {
@@ -47,10 +46,9 @@ const requiresOwnerOrAdmin = (req, res, next) => {
     if (doc.owner._id.toString() === req.session.account._id || req.session.account.isAdmin) {
       return next();
     }
-    else {
-      return res.status(403).send('Sorry! You do not have permission');
-    }
-  })
+
+    return res.status(403).send('Sorry! You do not have permission');
+  });
 };
 
 module.exports.requiresLogin = requiresLogin;

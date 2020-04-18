@@ -33,7 +33,7 @@ ConversationSchema.method('addMessage', function (message, senderName) {
   const messageData = {
     text: message,
     convo: this._id,
-    senderName
+    senderName,
   };
 
   const newMessage = new Message.MessageModel(messageData);

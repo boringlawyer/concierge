@@ -28,11 +28,12 @@ ConversationSchema.statics.findByOwner = (owner, callback) => {
   return ConversationModel.find(search).exec(callback);
 };
 
-ConversationSchema.method('addMessage', function (message) {
+ConversationSchema.method('addMessage', function (message, senderName) {
   const thisConversation = this;
   const messageData = {
     text: message,
     convo: this._id,
+    senderName
   };
 
   const newMessage = new Message.MessageModel(messageData);

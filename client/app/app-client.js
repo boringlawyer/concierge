@@ -40,7 +40,7 @@ class NewConversation extends React.Component {
                                 <Form.Label>Title: </Form.Label>
                                 <Form.Control type="text" name="title"></Form.Control>
                                 <Form.Control type="hidden" name="_csrf" value={this.state.csrf} />
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" onClick={this.hide}>
                                     Create
                                 </Button>
                             </Form.Group>

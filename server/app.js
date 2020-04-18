@@ -83,13 +83,14 @@ app.use((err, req, res, next) => {
   console.log(`Missing CSRF token ${req.url}`);
   return false;
 });
-app.use('/chat', (req, res, next) => {
+app.use('/chat', (req, res, appNext) => {
   io.use((socket, next) => {
-    socket.handshake.query.clientUsername = req.session.account.username;
-    socket.handshake.query.roomToJoin = req.params.conversationId;
+    const { handshake } = socket;
+    handshake.query.clientUsername = req.session.account.username;
+    handshake.query.roomToJoin = req.params.conversationId;
     next();
   });
-  next();
+  appNext();
 });
 socketManager(io);
 router(app);

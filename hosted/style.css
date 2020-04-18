@@ -242,9 +242,8 @@ h3.domoAge {
 .domo:last-child {
     margin-bottom:10px;
 }
-
+/* https://www.w3schools.com/css/css_positioning.asp and https://getbootstrap.com/docs/4.4/utilities/position/ */
 #messageBox {
-    position: sticky;
-    padding-top: 90vh;
-    bottom: 0;
+    max-width: 25%;
+    left: 37.5%;
 }

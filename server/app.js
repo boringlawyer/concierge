@@ -50,7 +50,6 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const socketManager = require('./socket');
 
-socketManager(io);
 const router = require('./router');
 
 
@@ -84,6 +83,15 @@ app.use((err, req, res, next) => {
   console.log(`Missing CSRF token ${req.url}`);
   return false;
 });
+app.use('/chat', (req, res, next) => {
+  io.use((socket, next) => {
+    socket.handshake.query.clientUsername = req.session.account.username;
+    socket.handshake.query.roomToJoin = req.params.conversationId;
+    next();
+  });
+  next();
+});
+socketManager(io);
 router(app);
 
 http.listen(port, (err) => {

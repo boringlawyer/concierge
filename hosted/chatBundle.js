@@ -7,11 +7,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var conversationId = location.href.split('/')[4];
-var socket = io({
-  query: {
-    conversationId: conversationId
-  }
-});
+var socket = io();
 socket.on('loadMsgs', function (messages) {
   var _iterator = _createForOfIteratorHelper(messages),
       _step;
@@ -32,6 +28,11 @@ socket.on('updateMsgs', function (message) {
 });
 $('#sendMsg').on('click', function () {
   socket.emit('message', $('#msgText').val()); // $('#messages').append($('<li>').text($('#msgText').val()));
+}); // if the server is down, and then is restarted when the chat page is open, it causes an error.
+// This fix ensures that when the error is caught on the server, it tells the page to refresh
+
+socket.on('refresh', function () {
+  window.location.assign(window.location.href);
 });
 "use strict";
 
@@ -57,4 +58,20 @@ var sendAjax = function sendAjax(type, action, data, success) {
       handleError(messageObj.error);
     }
   });
+};
+
+var Conversation = function Conversation(props) {
+  return /*#__PURE__*/React.createElement("a", {
+    href: "/chat/".concat(props.link)
+  }, /*#__PURE__*/React.createElement("h3", null, props.title));
+};
+
+var ConversationList = function ConversationList(props) {
+  var nodes = props.convos.map(function (c) {
+    return /*#__PURE__*/React.createElement(Conversation, {
+      title: c.title,
+      link: c._id
+    });
+  });
+  return /*#__PURE__*/React.createElement(React.Fragment, null, nodes);
 };

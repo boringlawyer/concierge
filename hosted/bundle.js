@@ -95,7 +95,8 @@ var NewConversation = /*#__PURE__*/function (_React$Component) {
         value: this.state.csrf
       }), /*#__PURE__*/React.createElement(Button, {
         variant: "primary",
-        type: "submit"
+        type: "submit",
+        onClick: this.hide
       }, "Create"))))));
     }
   }]);

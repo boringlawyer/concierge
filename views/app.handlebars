@@ -3,8 +3,8 @@
   <meta charset="utf-8"/>
   <title>Concierge</title>
   <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
-  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
   <script>var Button = ReactBootstrap.Button; var Form = ReactBootstrap.Form; var Modal = ReactBootstrap.Modal;</script>
   <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
@@ -17,8 +17,10 @@
 <body>
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
     <div class="navlink"><a href="/logout">Log out</a></div>
+    <div class="navlink"><a id="changePassBtn" href="/changePassword">Change Password</a></div>
   </nav>
   <section id="convos"></section>
+  <section id="changePassSection"></section>
     <script src="/assets/bundle.js"></script>
 </body>
 </html>

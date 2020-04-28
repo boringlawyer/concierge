@@ -71,6 +71,32 @@ const signup = (req, res) => {
   });
 };
 
+const changePassword = (req, res) => {
+  const oldPass = `${req.body.oldPass}`;
+  const newPass = `${req.body.newPass}`;
+  const newPass2 = `${req.body.newPass2}`;
+  if (!oldPass || !newPass || !newPass2) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  if (newPass !== newPass2) {
+    return res.status(400).json({ error: 'Passwords do not match' });
+  }
+  const username = req.session.account.username;
+  return Account.AccountModel.authenticate(username, oldPass, (err, account) => {
+    if (err || !account) {
+      return res.status(401).json({ error: 'Wrong username or password' });
+    }
+    return Account.AccountModel.generateHash(newPass, (salt, hash) => {
+      account.salt = salt;
+      account.password = hash;
+      let savePromise = account.save();
+      savePromise.then(() => {
+        return res.status(201).send("Password changed successfully")
+      });  
+    })
+  })
+}
+
 const getToken = (req, res) => {
   const csrfJSON = {
     csrfToken: req.csrfToken(),
@@ -128,6 +154,7 @@ const getUsersAndConversations = (req, res) => {
 
 module.exports.loginPage = loginPage;
 module.exports.login = login;
+module.exports.changePassword = changePassword;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;

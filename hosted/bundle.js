@@ -102,6 +102,106 @@ var NewConversation = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return NewConversation;
+}(React.Component); // Thanks to https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+
+
+var staticShowEvent = new Event('staticShow');
+
+var ChangePassword = /*#__PURE__*/function (_React$Component2) {
+  _inherits(ChangePassword, _React$Component2);
+
+  var _super2 = _createSuper(ChangePassword);
+
+  function ChangePassword(props) {
+    var _this2;
+
+    _classCallCheck(this, ChangePassword);
+
+    _this2 = _super2.call(this, props);
+    _this2.state = {
+      canShow: false,
+      csrf: props.csrf
+    };
+    _this2.show = _this2.show.bind(_assertThisInitialized(_this2));
+    _this2.hide = _this2.hide.bind(_assertThisInitialized(_this2));
+    _this2.changePassword = _this2.changePassword.bind(_assertThisInitialized(_this2));
+    addEventListener('staticShow', _this2.show);
+    return _this2;
+  }
+
+  _createClass(ChangePassword, [{
+    key: "show",
+    value: function show() {
+      this.setState({
+        canShow: true
+      });
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.setState({
+        canShow: false
+      });
+    }
+  }, {
+    key: "changePassword",
+    value: function changePassword(e) {
+      e.preventDefault();
+
+      if ($("#pass1").val() == '' || $("#pass2").val() == '') {
+        alert("Must enter password twice");
+        return;
+      }
+
+      if ($("#pass1").val() !== $("#pass2").val()) {
+        alert("Passwords must match");
+        return;
+      }
+
+      var test = $("#changePasswordForm").serializeArray();
+      sendAjax('POST', '/changePassword', test, function () {
+        console.log("Change password success");
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Modal, {
+        show: this.state.canShow,
+        onHide: this.hide
+      }, /*#__PURE__*/React.createElement(Modal.Header, {
+        closeButton: true
+      }, /*#__PURE__*/React.createElement(Modal.Title, null, "New Conversation")), /*#__PURE__*/React.createElement(Modal.Body, null, /*#__PURE__*/React.createElement(Form, {
+        id: "changePasswordForm",
+        onSubmit: this.changePassword
+      }, /*#__PURE__*/React.createElement(Form.Group, {
+        controlId: "oldPass"
+      }, /*#__PURE__*/React.createElement(Form.Label, null, "Old Password: "), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "text",
+        name: "oldPass"
+      })), /*#__PURE__*/React.createElement(Form.Group, {
+        controlId: "newPass"
+      }, /*#__PURE__*/React.createElement(Form.Label, null, "New Password: "), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "text",
+        name: "newPass"
+      })), /*#__PURE__*/React.createElement(Form.Group, {
+        controlId: "newPass2"
+      }, /*#__PURE__*/React.createElement(Form.Label, null, "Confirm New Password: "), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "text",
+        name: "newPass2"
+      })), /*#__PURE__*/React.createElement(Form.Control, {
+        type: "hidden",
+        name: "_csrf",
+        value: this.state.csrf
+      }), /*#__PURE__*/React.createElement(Button, {
+        variant: "primary",
+        type: "submit",
+        onClick: this.hide
+      }, "Change Password")))));
+    }
+  }]);
+
+  return ChangePassword;
 }(React.Component);
 
 var ConversationMenu = function ConversationMenu(props) {
@@ -115,13 +215,13 @@ var ConversationMenu = function ConversationMenu(props) {
     }));
   }
 
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, "Conversations: "), /*#__PURE__*/React.createElement("div", {
     className: "convoList"
   }, /*#__PURE__*/React.createElement(ConversationList, {
     convos: props.convos
   }), /*#__PURE__*/React.createElement(NewConversation, {
     csrf: props.csrf
-  }));
+  })));
 };
 
 var loadConversations = function loadConversations(csrf) {
@@ -134,6 +234,13 @@ var loadConversations = function loadConversations(csrf) {
 };
 
 var setup = function setup(csrf) {
+  ReactDOM.render( /*#__PURE__*/React.createElement(ChangePassword, {
+    csrf: csrf
+  }), document.querySelector("#changePassSection"));
+  document.querySelector("#changePassBtn").addEventListener('click', function (e) {
+    e.preventDefault();
+    dispatchEvent(staticShowEvent);
+  });
   loadConversations(csrf);
 };
 

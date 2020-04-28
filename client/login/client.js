@@ -1,3 +1,5 @@
+// help from https://getbootstrap.com/docs/4.4/components/forms/
+
 const handleLogin = (e) => {
     e.preventDefault();
     if ($("#user").val() == '' || $("#pass").val() == '') {
@@ -32,15 +34,33 @@ const LoginWindow = (props) => {
             method="POST"
             className="mainForm"
         >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username"></input>
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password"></input>
+            <div className="form-group row">
+                <label htmlFor="username">Username: </label>
+                <input className="form-control" id="user" type="text" name="username" placeholder="username"></input>
+            </div>
+            <div className="form-group row">
+                <label htmlFor="pass">Password: </label>
+                <input className="form-control" id="pass" type="password" name="pass" placeholder="password"></input>
+            </div>
             <input type="hidden" name="_csrf" value={props.csrf}></input>
-            <input className="formSubmit" type="submit" value="Sign in" />
+            <input className="formSubmit form-control" type="submit" value="Sign in" />
         </form>
     );
 };
+// with help from https://react-bootstrap.netlify.app/components/navbar
+const LoginNavBar = (props) => {
+    return (
+        <ReactBootstrap.Navbar bg="dark" variant="dark">
+            <ReactBootstrap.Navbar.Brand>Concierge</ReactBootstrap.Navbar.Brand>
+            <ReactBootstrap.Nav className="mr-auto">
+                <ReactBootstrap.Nav.Link id="loginButton"><a className="navlink" href="/login">Login</a></ReactBootstrap.Nav.Link>
+                <ReactBootstrap.Nav.Link id="signupButton"><a className="navlink" href="/signup">Signup</a></ReactBootstrap.Nav.Link>
+                <ReactBootstrap.Nav.Link id="adminSignupButton"><a className="navlink" href="/adminSignup">Signup as Admin</a></ReactBootstrap.Nav.Link>
+            </ReactBootstrap.Nav>
+        </ReactBootstrap.Navbar>
+
+    )
+}
 
 const SignupWindow = (props) => {
     return (
@@ -51,15 +71,21 @@ const SignupWindow = (props) => {
             method="POST"
             className="mainForm"
         >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username"></input>
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password"></input>
-            <label htmlFor="pass2"></label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password"></input>
-            <input type="hidden" name="_csrf" value={props.csrf}></input>
-            <input type="hidden" name="isAdmin" value={props.isAdmin}></input>
-            <input className="formSubmit" type="submit" value="Sign in" />
+            <div className="form-group row">
+                <label htmlFor="username">Username: </label>
+                <input className="form-control" id="user" type="text" name="username" placeholder="username"></input>
+            </div>
+            <div className="form-group row">
+                <label htmlFor="pass">Password: </label>
+                <input className="form-control" id="pass" type="password" name="pass" placeholder="password"></input>
+            </div>
+            <div className="form-group row">
+                <label htmlFor="pass2"></label>
+                <input className="form-control" id="pass2" type="password" name="pass2" placeholder="retype password"></input>
+            </div>
+                <input type="hidden" name="_csrf" value={props.csrf}></input>
+                <input type="hidden" name="isAdmin" value={props.isAdmin}></input>
+                <input className="formSubmit form-control" type="submit" value="Sign in" />
         </form>
     );
 };
@@ -79,9 +105,11 @@ const createSignupWindow = (csrf, isAdmin) => {
 };
 
 const setup = (csrf) => {
-    const loginButton = document.querySelector("#loginButton");
-    const signupButton = document.querySelector("#signupButton");
-    const adminSignupButton = document.querySelector("#adminSignupButton");
+    ReactDOM.render(<LoginNavBar></LoginNavBar>, document.querySelector("#navbar"));
+    // https://www.w3schools.com/css/css_attribute_selectors.asp
+    const loginButton = document.querySelector('[href="/login"]');
+    const signupButton = document.querySelector('[href="/signup"]');
+    const adminSignupButton = document.querySelector('[href="/adminSignup"]');
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();

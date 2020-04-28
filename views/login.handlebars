@@ -2,8 +2,9 @@
 <head>
   <meta charset="utf-8"/>
   <title>Concierge</title>
-  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
   <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -12,12 +13,15 @@
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body> 
-  <nav><a href="/login"></a><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
+  {{!-- <nav><a href="/login"></a><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
     <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
     <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
     <div class="navlink"><a id="adminSignupButton" href="/adminSignup">Sign up as Admin</a></div>
-  </nav>
-  <section id="content"></section>
+  </nav> --}}
+  <div id="container">
+    <div id="navbar"></div>
+    <section id="content"></section>
+  </div>
   <script src="/assets/loginBundle.js"></script>
 </body>
 </html>

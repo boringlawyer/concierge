@@ -16,13 +16,12 @@ const socketManager = (io) => {
         return;
       }
       currentConversation = res;
-      socket.emit('loadMsgs', res.messages.map((m) => `${m.senderName} said: ${m.text}`));
+      socket.emit('loadMsgs', res.messages);
     });
     socket.on('message', (message) => {
-      console.log(message);
-      console.log(socket.handshake.query.clientUsername);
       currentConversation.addMessage(message, socket.handshake.query.clientUsername).then(() => {
-        io.to(room).emit('updateMsgs', `${socket.handshake.query.clientUsername} said: ${message}`);
+        message.senderName = socket.handshake.query.clientUsername;
+        io.to(room).emit('updateMsgs', message);
       });
       // messages.push(message);
     });

@@ -31,7 +31,14 @@ const getConversations = (req, res) => {
   });
 };
 
-const chatPage = (req, res) => res.render('chat');
+const chatPage = (req, res) => {
+  if (req.session.account.isAdmin) {
+    res.render('chat-admin');
+  }
+  else {
+    res.render('chat');
+  }
+};
 
 
 module.exports.createConversation = createConversation;

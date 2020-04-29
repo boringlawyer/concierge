@@ -31,9 +31,10 @@ ConversationSchema.statics.findByOwner = (owner, callback) => {
 ConversationSchema.method('addMessage', function (message, senderName) {
   const thisConversation = this;
   const messageData = {
-    text: message,
+    value: message.value,
     convo: this._id,
     senderName,
+    type: message.type
   };
 
   const newMessage = new Message.MessageModel(messageData);

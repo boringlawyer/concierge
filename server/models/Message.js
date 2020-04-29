@@ -6,9 +6,9 @@ let MessageModel = {};
 
 
 const MessageSchema = new mongoose.Schema({
-  text: {
+  value: {
     type: String,
-    required: true,
+    required: false,
   },
   convo: {
     type: mongoose.Schema.ObjectId,
@@ -19,7 +19,19 @@ const MessageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true
+  }
 });
+
+MessageSchema.method('toAPI', () => {
+  return {
+    value: this.value,
+    senderName: this.senderName,
+    type: this.type
+  }
+})
 
 MessageModel = mongoose.model('Message', MessageSchema);
 

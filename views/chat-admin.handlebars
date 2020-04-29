@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Concierge</title>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin></script>
+  <script>var Button = ReactBootstrap.Button; var Form = ReactBootstrap.Form; var Modal = ReactBootstrap.Modal;</script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+</head>
+<body>
+  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
+    <div class="navlink"><a href="/logout">Log out</a></div>
+  </nav>
+  <div class="container">
+    <ul id="messages"></ul>
+    <div class="row">
+      <div class="col xl-12">
+        
+        <div class="input-group fixed-bottom" id="messageBox">
+              <input type="text" class="form-control" aria-describedby="messagebox" id="msgText">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="sendMsg">Send</button>
+                <button class="btn btn-light" type="button" id="sendTextInput">Create text input</button>
+                <button class="btn btn-light" type="button" id="sendNumberInput">Create number input</button>
+                <button class="btn btn-light" type="button" id="sendSecretInput">Create secret input</button>
+              </div>
+        </div>
+          
+
+
+      </div>
+    </div>
+  </div>
+  <script src="/assets/chatBundle.js"></script>
+</body>
+</html>

@@ -34,8 +34,7 @@ const getConversations = (req, res) => {
 const chatPage = (req, res) => {
   if (req.session.account.isAdmin) {
     res.render('chat-admin');
-  }
-  else {
+  } else {
     res.render('chat');
   }
 };

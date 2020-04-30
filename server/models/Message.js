@@ -21,17 +21,15 @@ const MessageSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-MessageSchema.method('toAPI', () => {
-  return {
-    value: this.value,
-    senderName: this.senderName,
-    type: this.type
-  }
-})
+MessageSchema.method('toAPI', () => ({
+  value: this.value,
+  senderName: this.senderName,
+  type: this.type,
+}));
 
 MessageModel = mongoose.model('Message', MessageSchema);
 

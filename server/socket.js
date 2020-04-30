@@ -20,8 +20,9 @@ const socketManager = (io) => {
     });
     socket.on('message', (message) => {
       currentConversation.addMessage(message, socket.handshake.query.clientUsername).then(() => {
-        message.senderName = socket.handshake.query.clientUsername;
-        io.to(room).emit('updateMsgs', message);
+        const finalMessage = message;
+        finalMessage.senderName = socket.handshake.query.clientUsername;
+        io.to(room).emit('updateMsgs', finalMessage);
       });
       // messages.push(message);
     });

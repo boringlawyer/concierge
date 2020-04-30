@@ -81,21 +81,20 @@ const changePassword = (req, res) => {
   if (newPass !== newPass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
-  const username = req.session.account.username;
+  const { username } = req.session.account;
   return Account.AccountModel.authenticate(username, oldPass, (err, account) => {
     if (err || !account) {
       return res.status(401).json({ error: 'Wrong username or password' });
     }
     return Account.AccountModel.generateHash(newPass, (salt, hash) => {
-      account.salt = salt;
-      account.password = hash;
-      let savePromise = account.save();
-      savePromise.then(() => {
-        return res.status(201).send("Password changed successfully")
-      });  
-    })
-  })
-}
+      const modifiedAccount = account;
+      modifiedAccount.salt = salt;
+      modifiedAccount.password = hash;
+      const savePromise = modifiedAccount.save();
+      savePromise.then(() => res.status(201).send('Password changed successfully'));
+    });
+  });
+};
 
 const getToken = (req, res) => {
   const csrfJSON = {

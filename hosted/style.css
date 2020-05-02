@@ -56,7 +56,7 @@ html, body {
     font-size: 1.2em;
 }
 
-.mainForm, h3, .mainHeader {
+.mainForm, .mainHeader, .secondaryHeader {
     text-align: center;    
 }
 

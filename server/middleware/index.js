@@ -27,7 +27,7 @@ const bybassSecure = (req, res, next) => {
 const requiresValidConversation = (req, res, next) => {
   models.Conversation.ConversationModel.findById(req.params.conversationId, (err, doc) => {
     if (err || !doc) {
-      return res.status(404).render('error', {message: 'That conversation does not exist'});
+      return res.status(404).render('error', { message: 'That conversation does not exist' });
     }
     return next();
   });
@@ -38,7 +38,7 @@ const requiresAdmin = (req, res, next) => {
     return next();
   }
 
-  return res.status(404).render('error', {message: 'You have to be an admin to access this page'});
+  return res.status(404).render('error', { message: 'You have to be an admin to access this page' });
 };
 
 const requiresOwnerOrAdmin = (req, res, next) => {
@@ -47,7 +47,7 @@ const requiresOwnerOrAdmin = (req, res, next) => {
       return next();
     }
 
-    return res.status(403).render('error', {message: 'You do not have permission'});
+    return res.status(403).render('error', { message: 'You do not have permission' });
   });
 };
 

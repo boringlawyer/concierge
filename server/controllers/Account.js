@@ -96,7 +96,7 @@ const changePassword = (req, res) => {
       modifiedAccount.salt = salt;
       modifiedAccount.password = hash;
       const savePromise = modifiedAccount.save();
-      savePromise.then(() => res.status(201).json({message: 'Password changed successfully'}));
+      savePromise.then(() => res.status(201).json({ message: 'Password changed successfully' }));
     });
   });
 };
@@ -130,7 +130,7 @@ const getUsersAndConversations = (req, res) => {
       name: (username of the account),
       conversations: (the conversation that account has created)
     }. Promise.all waits for all promises to be resolved
-    */ 
+    */
     return Promise.all(accountDocs.map((a) => {
       const convoPromise = models.Conversation.ConversationModel.findByOwner(a._id);
       return convoPromise.then((convoDocs) => {

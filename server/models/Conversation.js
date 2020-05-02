@@ -39,9 +39,7 @@ ConversationSchema.method('addMessage', function (message, senderName) {
   const newMessage = new Message.MessageModel(messageData);
 
   const saveMessagePromise = newMessage.save();
-  return saveMessagePromise.then(() => {
-      return newMessage._id.toString();
-  });
+  return saveMessagePromise.then(() => newMessage._id.toString());
 });
 
 ConversationModel = mongoose.model('Conversation', ConversationSchema);

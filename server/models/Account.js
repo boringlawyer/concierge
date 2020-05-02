@@ -80,7 +80,8 @@ AccountSchema.statics.generateHash = (password, callback) => {
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
-// Checks if an account with username (username) exists, then checks if that account has password (password)
+// Checks if an account with username (username) exists,
+// then checks if that account has password (password)
 AccountSchema.statics.authenticate = (username, password, callback) => {
   AccountModel.findByUsername(username, (err, doc) => {
     if (err) {

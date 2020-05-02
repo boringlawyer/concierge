@@ -22,6 +22,7 @@ const createConversation = (req, res) => {
   });
 };
 
+// finds the conversation that the current user created
 const getConversations = (req, res) => {
   Conversation.ConversationModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -31,6 +32,7 @@ const getConversations = (req, res) => {
   });
 };
 
+// renders the chat pages for users and admins
 const chatPage = (req, res) => {
   if (req.session.account.isAdmin) {
     res.render('chat-admin');

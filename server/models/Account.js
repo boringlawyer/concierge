@@ -35,6 +35,7 @@ const AccountSchema = new mongoose.Schema({
   },
 });
 
+// takes an account object and puts some of its data in a more compact object
 AccountSchema.statics.toAPI = (doc) => ({
   // _id is built into your mongo document and is guaranteed to be unique
   username: doc.username,
@@ -42,6 +43,7 @@ AccountSchema.statics.toAPI = (doc) => ({
   isAdmin: doc.isAdmin,
 });
 
+// make sure the hash of the password argument matches the hash in the database
 const validatePassword = (doc, password, callback) => {
   const pass = doc.password;
 
@@ -53,6 +55,7 @@ const validatePassword = (doc, password, callback) => {
   });
 };
 
+// gets the account with username (name)
 AccountSchema.statics.findByUsername = (name, callback) => {
   const search = {
     username: name,
@@ -61,6 +64,7 @@ AccountSchema.statics.findByUsername = (name, callback) => {
   return AccountModel.findOne(search, callback);
 };
 
+// gets the account with id (id)
 AccountSchema.statics.findById = (id, callback) => {
   const search = {
     _id: id,
@@ -69,13 +73,14 @@ AccountSchema.statics.findById = (id, callback) => {
   return AccountModel.findOne(search, callback);
 };
 
-
+// used for making a new account or creating a new hash for a new password
 AccountSchema.statics.generateHash = (password, callback) => {
   const salt = crypto.randomBytes(saltLength);
 
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
+// Checks if an account with username (username) exists, then checks if that account has password (password)
 AccountSchema.statics.authenticate = (username, password, callback) => {
   AccountModel.findByUsername(username, (err, doc) => {
     if (err) {

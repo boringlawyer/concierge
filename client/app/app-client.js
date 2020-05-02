@@ -7,15 +7,15 @@ class NewConversation extends React.Component {
         this.handleNewConversation = this.handleNewConversation.bind(this);
         
     }
-    
+    // presents the modal that has the new conversation form
     show() {
         this.setState({canShow: true});
     }
-
+    // hides the modal that has the new conversation form
     hide() {
         this.setState({canShow: false});
     }
-
+    // sends data to the server to create a conversation
     handleNewConversation (e){
         e.preventDefault();
         if ($("#convoTitle").val() == '') {
@@ -56,15 +56,6 @@ let staticShowEvent = new Event('staticShow');
 
 
 const ConversationMenu = (props) => {
-        // if (props.convos.length === 0) {
-        //     return (
-        //         <div className="convoList">
-        //             <h3 className="emptyList">No Conversations yet</h3>
-        //             <NewConversation csrf={props.csrf}/>
-        //         </div>
-        //     );
-        // }
-    
         return (
             <>
                 <h3>Conversations: </h3>
@@ -86,8 +77,6 @@ const loadConversations = (csrf) => {
 };
 
 const setup = function(csrf) {
-    // ReactDOM.render(<ChangePassword csrf={csrf}/>, document.querySelector("#changePassSection"));
-    // document.querySelector("#changePassBtn").addEventListener('click', (e) => { e.preventDefault(); dispatchEvent(staticShowEvent)});
     ReactDOM.render(<AppNavBar csrf={csrf}/>, document.querySelector("nav"));
     loadConversations(csrf);
 };

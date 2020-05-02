@@ -2,13 +2,13 @@ const models = require('../models');
 
 const { Conversation } = models;
 
-
+// writes a new conversation to the database
 const createConversation = (req, res) => {
   const convoData = {
     title: req.body.title,
     owner: req.session.account._id,
   };
-
+  // creates and saves a conversation with the convoData
   const newConvo = new models.Conversation.ConversationModel(convoData);
 
   const newConvoPromise = newConvo.save();

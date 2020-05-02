@@ -119,15 +119,15 @@ class ChangePassword extends React.Component{
                         <Form id="changePasswordForm" onSubmit={this.changePassword}>
                             <Form.Group controlId="oldPass">
                                 <Form.Label>Old Password: </Form.Label>
-                                <Form.Control type="text" name="oldPass"></Form.Control>
+                                <Form.Control type="password" name="oldPass"></Form.Control>
                             </Form.Group>
                             <Form.Group controlId="newPass">
                                 <Form.Label>New Password: </Form.Label>
-                                <Form.Control type="text" name="newPass"></Form.Control>
+                                <Form.Control type="password" name="newPass"></Form.Control>
                             </Form.Group>
                             <Form.Group controlId="newPass2">
                                 <Form.Label>Confirm New Password: </Form.Label>
-                                <Form.Control type="text" name="newPass2"></Form.Control>
+                                <Form.Control type="password" name="newPass2"></Form.Control>
                             </Form.Group>
                             <Form.Control type="hidden" name="_csrf" value={this.state.csrf} />
                             <Button variant="primary" type="submit" onClick={() => dispatchEvent(this.props.changeVisibility)}>

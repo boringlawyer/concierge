@@ -33,6 +33,9 @@ const Conversation = (props) => {
 }
 
 const ConversationList = (props) => {
+    if (props.convos.length === 0) {
+        return <h3 className="emptyList">No Conversations yet</h3>
+    }
     let nodes = props.convos.map(c => {
         return <Conversation title={c.title} link={c._id} />
     });
@@ -102,7 +105,7 @@ class ChangePassword extends React.Component{
             return;
         }
         let test = $("#changePasswordForm").serializeArray();
-        sendAjax('POST', '/changePassword', test, () => {console.log("Change password success")})
+        sendAjax('POST', '/changePassword', test, (json) => {alert(json.message)})
     }
 
     render() {

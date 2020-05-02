@@ -56,14 +56,14 @@ let staticShowEvent = new Event('staticShow');
 
 
 const ConversationMenu = (props) => {
-        if (props.convos.length === 0) {
-            return (
-                <div className="convoList">
-                    <h3 className="emptyList">No Conversations yet</h3>
-                    <NewConversation csrf={props.csrf}/>
-                </div>
-            );
-        }
+        // if (props.convos.length === 0) {
+        //     return (
+        //         <div className="convoList">
+        //             <h3 className="emptyList">No Conversations yet</h3>
+        //             <NewConversation csrf={props.csrf}/>
+        //         </div>
+        //     );
+        // }
     
         return (
             <>

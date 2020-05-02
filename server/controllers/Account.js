@@ -1,17 +1,19 @@
 const models = require('../models');
 
 const { Account } = models;
-
+// sends user to the login page
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
-
+// logouts the user. Destroys the session and sends them to home page
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+// Validates username and password, creates a session if successful,
+// then redirects them to the appropriate page
 const login = (req, res) => {
   const username = `${req.body.username}`;
   const password = `${req.body.pass}`;
@@ -31,6 +33,7 @@ const login = (req, res) => {
   });
 };
 
+// Validates username and password input, creates an account, then redirects the user
 const signup = (req, res) => {
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
@@ -71,6 +74,8 @@ const signup = (req, res) => {
   });
 };
 
+// Validates the old password, then generates a new salt and hash for the account to use
+// based on the new password
 const changePassword = (req, res) => {
   const oldPass = `${req.body.oldPass}`;
   const newPass = `${req.body.newPass}`;
@@ -96,6 +101,7 @@ const changePassword = (req, res) => {
   });
 };
 
+// returns the csurf token used for page validation
 const getToken = (req, res) => {
   const csrfJSON = {
     csrfToken: req.csrfToken(),
@@ -104,11 +110,13 @@ const getToken = (req, res) => {
   res.json(csrfJSON);
 };
 
+// renders the admin page
 const adminPage = (req, res) => {
   res.render('admin');
 };
-
+// searches for users (not admins), and returns the user data and their conversations
 const getUsersAndConversations = (req, res) => {
+  // initial search for accounts who are not admins
   const search = {
     isAdmin: false,
   };
@@ -117,6 +125,12 @@ const getUsersAndConversations = (req, res) => {
     if (!accountDocs) {
       return res.json({ error: 'An error occurred' });
     }
+    /* for every account in accountDocs, create a promise that returns an object
+    {
+      name: (username of the account),
+      conversations: (the conversation that account has created)
+    }. Promise.all waits for all promises to be resolved
+    */ 
     return Promise.all(accountDocs.map((a) => {
       const convoPromise = models.Conversation.ConversationModel.findByOwner(a._id);
       return convoPromise.then((convoDocs) => {
@@ -132,24 +146,10 @@ const getUsersAndConversations = (req, res) => {
         name: a.username,
         conversations: convos,
       }));
+      // Once all promises are resolved, return the promises array as json
     })).then((promises) => res.json(promises));
   });
 };
-// , (accountErr, accountDocs) => {
-  //   if (accountErr || !accountDocs) {
-  //     return res.json({error: 'An error occurred'});
-  //   }
-  //   return accountDocs.map((a) => {
-  //     models.Conversation.ConversationModel.findByOwner(a._id, (convoErr, convoDocs) => {
-  //       if (convoErr || !convoDocs) {
-  //         return res.json({error: 'An error occurred'});
-  //       }
-
-//     )
-//   })
-// })
-//   }
-// }
 
 module.exports.loginPage = loginPage;
 module.exports.login = login;

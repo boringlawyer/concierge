@@ -29,7 +29,7 @@ const login = (req, res) => {
 
     req.session.account = Account.AccountModel.toAPI(account);
 
-    return res.json({ redirect: `/${account.isAdmin ? 'admin' : 'maker'}` });
+    return res.json({ redirect: `/${account.isAdmin ? 'admin' : 'app'}` });
   });
 };
 
@@ -59,7 +59,7 @@ const signup = (req, res) => {
 
     savePromise.then(() => {
       req.session.account = Account.AccountModel.toAPI(newAccount);
-      res.json({ redirect: `/${newAccount.isAdmin ? 'admin' : 'maker'}` });
+      res.json({ redirect: `/${newAccount.isAdmin ? 'admin' : 'app'}` });
     });
 
     savePromise.catch((err) => {

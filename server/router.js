@@ -8,7 +8,7 @@ const router = (app) => {
   app.post('/changePassword', middleware.requiresSecure, middleware.requiresLogin, controllers.Account.changePassword);
   app.post('/signup', middleware.requiresSecure, middleware.requiresLogout, controllers.Account.signup);
   app.get('/logout', middleware.requiresLogin, controllers.Account.logout);
-  app.get('/maker', middleware.requiresLogin, controllers.Domo.makerPage);
+  app.get('/maker', middleware.requiresLogin, (req, res) => res.render('app', { csrfToken: req.csrfToken() }));
   app.get('/', middleware.requiresSecure, middleware.requiresLogout, controllers.Account.loginPage);
   app.post('/createConversation', middleware.requiresLogin, controllers.Conversation.createConversation);
   app.get('/getConversations', middleware.requiresLogin, controllers.Conversation.getConversations);

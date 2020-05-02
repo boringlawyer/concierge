@@ -27,9 +27,16 @@
               <input type="text" class="form-control" aria-describedby="messagebox" id="msgText">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button" id="sendMsg">Send</button>
-                <button class="btn btn-light" type="button" id="sendTextInput">Create text input</button>
+                {{!-- Thanks to https://getbootstrap.com/docs/4.4/components/input-group/#buttons-with-dropdowns --}}
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add input</button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" id="sendTextInput">Text input</a>
+                    <a class="dropdown-item" href="#" id="sendNumberInput">Number input</a>
+                    <a class="dropdown-item" href="#" id="sendSecretInput">Secret input</a>
+                  </div>
+                {{!-- <button class="btn btn-light" type="button" id="sendTextInput">Create text input</button>
                 <button class="btn btn-light" type="button" id="sendNumberInput">Create number input</button>
-                <button class="btn btn-light" type="button" id="sendSecretInput">Create secret input</button>
+                <button class="btn btn-light" type="button" id="sendSecretInput">Create secret input</button> --}}
               </div>
         </div>
           

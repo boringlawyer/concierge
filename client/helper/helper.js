@@ -21,7 +21,7 @@ const sendAjax = (type, action, data, success) => {
         }
     });
 };
-
+// basically a header and a link for the title of the conversation
 const Conversation = (props) => {
     return (
         <a href = {`/chat/${props.link}`}>
@@ -81,19 +81,9 @@ class ChangePassword extends React.Component{
     constructor(props) {
         super(props);
         this.state = {csrf: props.csrf};
-        // this.show = this.show.bind(this);
-        // this.hide = this.hide.bind(this);
         this.changePassword = this.changePassword.bind(this);
     }
-
-    // show() {
-    //     this.setState({canShow: true});
-    // }
-
-    // hide() {
-    //     this.setState({canShow: false});
-    // }
-
+    // submits the new password, along with the old password for verification, to the server
     changePassword(e) {
         e.preventDefault();
         if ($("#oldPass").val() == '' || $("#newPass").val() == '' || $("#newPass2").val() == '') {

@@ -17,32 +17,28 @@ socket.on('broadcastInput', (input) => {
     $(`#${input.id}`).val(input.value);
 })
 
-// socket.on('updateMsgs', (message) => {
-//     $('#messages').append($('<li>').text(message));
-// })
-
+// #sendMsg is the send button for text messages
 $('#sendMsg').on('click', () => {
     socket.emit('message', {
         value: $('#msgText').val(),
         type: 'text'
     });
-    // $('#messages').append($('<li>').text($('#msgText').val()));
 });
-
+// this creates text input as a message
 $('#sendTextInput').on('click', () => {
     socket.emit('message', {
         type: 'textInput',
         value: ''
     });
 });
-
+// this creates number input as a message
 $('#sendNumberInput').on('click', () => {
     socket.emit('message', {
         type: 'numberInput',
         value: ''
     });
 });
-
+// this creates secret (like a password) input as a message
 $('#sendSecretInput').on('click', () => {
     socket.emit('message', {
         type: 'secretInput',
@@ -55,7 +51,7 @@ $('#sendSecretInput').on('click', () => {
 socket.on('refresh', () => {
     window.location.assign(window.location.href);
 })
-
+// this component renders all messages in a conversation
 class Messages extends React.Component {
     constructor(props) {
         super(props);
@@ -99,7 +95,7 @@ class Messages extends React.Component {
         )
     }
 }
-
+// this represents an input element that the admin can create
 const Input = (props) => {
     return (
         <ReactBootstrap.InputGroup>

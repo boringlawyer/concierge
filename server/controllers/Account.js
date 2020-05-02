@@ -91,7 +91,7 @@ const changePassword = (req, res) => {
       modifiedAccount.salt = salt;
       modifiedAccount.password = hash;
       const savePromise = modifiedAccount.save();
-      savePromise.then(() => res.status(201).send('Password changed successfully'));
+      savePromise.then(() => res.status(201).json({message: 'Password changed successfully'}));
     });
   });
 };

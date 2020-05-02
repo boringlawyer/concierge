@@ -23,6 +23,11 @@ const MessageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now()
+  }
 });
 
 MessageSchema.method('toAPI', () => ({

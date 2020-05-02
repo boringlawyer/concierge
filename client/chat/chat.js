@@ -6,8 +6,16 @@ socket.on('loadMsgs', (messages) => {
     // for (let m of messages) {
     //     $('#messages').append($('<li>').text(m));
     // }
-    ReactDOM.render(<Messages messages={messages}/>, document.querySelector("#messages"))
+    sendAjax('GET', '/getToken', null, (result) => {
+        ReactDOM.render(<Messages messages={messages}/>, document.querySelector("#messages"))
+        ReactDOM.render(<AppNavBar csrf={result.csrfToken}/>, document.querySelector("nav"));    
+    });
 });
+
+// referenced https://api.jquery.com/val/
+socket.on('broadcastInput', (input) => {
+    $(`#${input.id}`).val(input.value);
+})
 
 // socket.on('updateMsgs', (message) => {
 //     $('#messages').append($('<li>').text(message));
@@ -23,19 +31,22 @@ $('#sendMsg').on('click', () => {
 
 $('#sendTextInput').on('click', () => {
     socket.emit('message', {
-        type: 'textInput'
+        type: 'textInput',
+        value: ''
     });
 });
 
 $('#sendNumberInput').on('click', () => {
     socket.emit('message', {
-        type: 'numberInput'
+        type: 'numberInput',
+        value: ''
     });
 });
 
 $('#sendSecretInput').on('click', () => {
     socket.emit('message', {
-        type: 'secretInput'
+        type: 'secretInput',
+        value: ''
     });
 });
 
@@ -62,24 +73,24 @@ class Messages extends React.Component {
             <ul>
                 {this.state.messages.map((m) => {
                     if (m.type == "text") {
-                    return (<li>{m.senderName} said: {m.value}</li>);
+                    return (<li id={m.id}>{m.senderName} said: {m.value}</li>);
                     }
                     else if (m.type == "textInput") {
                         return (<li>
-                            <Input prepend="abc" placeholder="Text Input" aria="Text Input"></Input>
+                            <Input prepend="abc" placeholder="Text Input" aria="Text Input" messageId={m.id || m._id} inputValue={m.value}></Input>
                         </li>)
                     }
                     else if (m.type == "numberInput") {
                         return (
                             <li>
-                                <Input prepend="#" placeholder="Number Input" aria="Number Input" as="number"></Input>
+                                <Input prepend="#" placeholder="Number Input" aria="Number Input" as="number" messageId={m.id || m._id} inputValue={m.value}></Input>
                             </li>
                         )
                     }
                     else if (m.type == "secretInput") {
                         return (
                             <li>
-                                <Input prepend="" placeholder="Secret Input" aria="Secret Input" as="password"></Input>
+                                <Input prepend="" placeholder="Secret Input" aria="Secret Input" as="password" messageId={m.id || m._id} inputValue={m.value}></Input>
                             </li>
                         )
                     }
@@ -99,7 +110,14 @@ const Input = (props) => {
             placeholder={props.placeholder}
             aria-label={props.aria}
             type={props.as || "text"}
+            id={props.messageId}
+            defaultValue={props.inputValue}
             />
+            <ReactBootstrap.InputGroup.Append>
+                <Button variant="primary" onClick={() => {socket.emit('saveInput', {id: props.messageId, value: $(`#${props.messageId}`).val()} )}}>
+                    Save
+                </Button>
+            </ReactBootstrap.InputGroup.Append>
         </ReactBootstrap.InputGroup>
     )
 }

@@ -43,7 +43,9 @@ ConversationSchema.method('addMessage', function (message, senderName) {
   return saveMessagePromise.then(() => {
     thisConversation.messages.push(newMessage);
     const saveConverationPromise = thisConversation.save();
-    return saveConverationPromise;
+    return saveConverationPromise.then(() => {
+      return newMessage._id.toString();
+    })
   });
 });
 

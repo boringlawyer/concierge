@@ -1,5 +1,5 @@
 const models = require('./models');
-
+const controllers = require('./controllers');
 const socketManager = (io) => {
   io.on('connection', (socket) => {
     console.log('User connected');
@@ -16,16 +16,36 @@ const socketManager = (io) => {
         return;
       }
       currentConversation = res;
-      socket.emit('loadMsgs', res.messages);
+      controllers.Message.findByConversation(room).then((docs) => {
+
+        if (!docs) {
+          console.log("findByConversation didn't work");
+          return;
+        }
+        socket.emit('loadMsgs', docs);
+      })
+      // socket.emit('loadMsgs', res.messages);
+      
     });
     socket.on('message', (message) => {
-      currentConversation.addMessage(message, socket.handshake.query.clientUsername).then(() => {
+      currentConversation.addMessage(message, socket.handshake.query.clientUsername).then((messageId) => {
         const finalMessage = message;
         finalMessage.senderName = socket.handshake.query.clientUsername;
+        finalMessage.id = messageId;
         io.to(room).emit('updateMsgs', finalMessage);
       });
       // messages.push(message);
     });
+    socket.on('saveInput', (input) => {
+      models.Message.MessageModel.findById(input.id, (err, res) => {
+        let newMessage = res;
+        newMessage.value = input.value;
+        let messageSavePromise = newMessage.save();
+        messageSavePromise.then(() => {
+          io.to(room).emit('broadcastInput', input);
+        })
+      })
+    })
   });
 };
 

@@ -37,6 +37,7 @@ const loadUsers = (csrf) => {
         ReactDOM.render(
             <UserList userData={data} csrf={csrf}/>, document.querySelector("#users")
         );
+        ReactDOM.render(<AppNavBar csrf={csrf} />, document.querySelector('nav'));
     });
 
 }

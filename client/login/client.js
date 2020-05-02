@@ -43,7 +43,7 @@ const LoginWindow = (props) => {
                 <input className="form-control" id="pass" type="password" name="pass" placeholder="password"></input>
             </div>
             <input type="hidden" name="_csrf" value={props.csrf}></input>
-            <input className="formSubmit form-control" type="submit" value="Sign in" />
+            <input className="formSubmit btn btn-primary" type="submit" value="Sign in" />
         </form>
     );
 };
@@ -51,12 +51,7 @@ const LoginWindow = (props) => {
 const LoginNavBar = (props) => {
     return (
         <ReactBootstrap.Navbar bg="dark" variant="dark">
-            <ReactBootstrap.Navbar.Brand>Concierge</ReactBootstrap.Navbar.Brand>
-            <ReactBootstrap.Nav className="mr-auto">
-                <ReactBootstrap.Nav.Link id="loginButton"><a className="navlink" href="/login">Login</a></ReactBootstrap.Nav.Link>
-                <ReactBootstrap.Nav.Link id="signupButton"><a className="navlink" href="/signup">Signup</a></ReactBootstrap.Nav.Link>
-                <ReactBootstrap.Nav.Link id="adminSignupButton"><a className="navlink" href="/adminSignup">Signup as Admin</a></ReactBootstrap.Nav.Link>
-            </ReactBootstrap.Nav>
+            <ReactBootstrap.Navbar.Brand><div id="logo">Concierge</div></ReactBootstrap.Navbar.Brand>
         </ReactBootstrap.Navbar>
 
     )
@@ -85,7 +80,7 @@ const SignupWindow = (props) => {
             </div>
                 <input type="hidden" name="_csrf" value={props.csrf}></input>
                 <input type="hidden" name="isAdmin" value={props.isAdmin}></input>
-                <input className="formSubmit form-control" type="submit" value="Sign in" />
+                <input className="formSubmit btn btn-primary" type="submit" value={props.isAdmin ? "Sign up as admin" : "Sign up"} />
         </form>
     );
 };

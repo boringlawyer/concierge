@@ -10,6 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;800&family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body> 
@@ -18,8 +19,18 @@
     <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
     <div class="navlink"><a id="adminSignupButton" href="/adminSignup">Sign up as Admin</a></div>
   </nav> --}}
-  <div id="container">
+  <div class="container-fluid">
     <div id="navbar"></div>
+    <h1 class="mainHeader">Your customers deserve the best.</h1>
+    <h3>Combine your most helpful experts with  a communication platform your users will love.</h3>
+    <h3>Concierge gives your users a modern progressive web app that can be used to connect with your employees.</h3>
+    <div class="row">
+      <div class="col" id="buttons">
+        <button class="btn btn-primary" id="homePageBtn" href="/login">Log in</button> 
+        <button class="btn btn-primary" id="homePageBtn" href="/signup">Signup as user</button>
+        <button class="btn btn-primary" id="homePageBtn" href="/adminSignup">Signup as admin</button>
+      </div>
+    </div>
     <section id="content"></section>
   </div>
   <script src="/assets/loginBundle.js"></script>

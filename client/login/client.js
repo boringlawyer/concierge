@@ -1,5 +1,5 @@
 // help from https://getbootstrap.com/docs/4.4/components/forms/
-
+// submits data from the login form to the server
 const handleLogin = (e) => {
     e.preventDefault();
     if ($("#user").val() == '' || $("#pass").val() == '') {
@@ -7,13 +7,11 @@ const handleLogin = (e) => {
         return false;
     }
 
-    console.log($("input[name=_csrf]").val());
-
     sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serializeArray(), redirect);
 
     return false;
 }
-
+// submits data from the signup form to the server
 const handleSignup = (e) => {
     e.preventDefault();
     if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
@@ -105,6 +103,8 @@ const setup = (csrf) => {
     const loginButton = document.querySelector('[href="/login"]');
     const signupButton = document.querySelector('[href="/signup"]');
     const adminSignupButton = document.querySelector('[href="/adminSignup"]');
+
+    // hooks up the three buttons to change the form
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();

@@ -21,6 +21,7 @@ const ConversationSchema = new mongoose.Schema({
   },
 });
 
+// finds the conversation object with owner (owner)
 ConversationSchema.statics.findByOwner = (owner, callback) => {
   const search = {
     owner,
@@ -28,6 +29,9 @@ ConversationSchema.statics.findByOwner = (owner, callback) => {
   return ConversationModel.find(search).exec(callback);
 };
 
+// a method for every Conversation object to create a message that is owned by this conversation
+// returns the id of the new message
+// with help from https://mongoosejs.com/docs/api.html#schema_Schema-method
 ConversationSchema.method('addMessage', function (message, senderName) {
   const thisConversation = this;
   const messageData = {

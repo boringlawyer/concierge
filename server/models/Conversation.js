@@ -15,10 +15,6 @@ const ConversationSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Account',
   },
-  messages: {
-    type: Array,
-    required: true,
-  },
 });
 
 // finds the conversation object with owner (owner)
@@ -33,7 +29,6 @@ ConversationSchema.statics.findByOwner = (owner, callback) => {
 // returns the id of the new message
 // with help from https://mongoosejs.com/docs/api.html#schema_Schema-method
 ConversationSchema.method('addMessage', function (message, senderName) {
-  const thisConversation = this;
   const messageData = {
     value: message.value,
     convo: this._id,
@@ -45,11 +40,7 @@ ConversationSchema.method('addMessage', function (message, senderName) {
 
   const saveMessagePromise = newMessage.save();
   return saveMessagePromise.then(() => {
-    thisConversation.messages.push(newMessage);
-    const saveConverationPromise = thisConversation.save();
-    return saveConverationPromise.then(() => {
       return newMessage._id.toString();
-    })
   });
 });
 

@@ -1,7 +1,7 @@
 const models = require('../models');
 
 const {Message} = models;
-
+// gets all messages in a conversation that has the id (convoId)
 const findByConversation = (convoId) => {
     let searchTerm = {
         convo: convoId

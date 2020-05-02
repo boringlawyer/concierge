@@ -29,7 +29,7 @@ const MessageSchema = new mongoose.Schema({
     default: Date.now()
   }
 });
-
+// takes a message object and puts some of its data in a more compact object 
 MessageSchema.method('toAPI', () => ({
   value: this.value,
   senderName: this.senderName,

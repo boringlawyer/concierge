@@ -87,7 +87,9 @@ app.use((err, req, res, next) => {
   console.log(`Missing CSRF token ${req.url}`);
   return false;
 });
+// Thanks https://expressjs.com/en/guide/writing-middleware.html
 app.use('/chat', (req, res, appNext) => {
+  // Thanks https://socket.io/docs/server-api/#namespace-use-fn
   io.use((socket, next) => {
     const { handshake } = socket;
     handshake.query.clientUsername = req.session.account.username;

@@ -45,6 +45,12 @@ const redisClient = redis.createClient({
   password: redisPASS,
 });
 const app = express();
+// Thank you https://stackoverflow.com/questions/6096492/node-js-and-express-session-handling-back-button-problem
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const socketManager = require('./socket');

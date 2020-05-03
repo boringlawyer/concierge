@@ -1,6 +1,6 @@
 const models = require('./models');
 const controllers = require('./controllers');
-
+// With help from: https://socket.io/docs/client-api https://socket.io/docs/server-api/ https://socket.io/docs/ https://socket.io/get-started/chat/
 const socketManager = (io) => {
   // fires event when connected to the client
   io.on('connection', (socket) => {

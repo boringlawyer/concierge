@@ -22,7 +22,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var conversationId = location.href.split('/')[4];
+// With help from: https://socket.io/docs/client-api https://socket.io/docs/server-api/ https://socket.io/docs/ https://socket.io/get-started/chat/
 var socket = io();
 socket.on('loadMsgs', function (messages) {
   // for (let m of messages) {

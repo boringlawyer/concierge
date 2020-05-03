@@ -1,5 +1,4 @@
-const conversationId = location.href.split('/')[4]
-
+// With help from: https://socket.io/docs/client-api https://socket.io/docs/server-api/ https://socket.io/docs/ https://socket.io/get-started/chat/
 const socket = io();
 
 socket.on('loadMsgs', (messages) => {

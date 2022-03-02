@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const url = require('url');
 const csrf = require('csurf');
 const redis = require('redis');
 
@@ -28,17 +27,13 @@ mongoose.connect(dbURL, mongooseOptions, (err) => {
   }
 });
 
-let redisURL = {
+const redisURL = {
   hostname: `${process.env.REDIS_HOST}`,
   port: `${process.env.REDIS_PORT}`,
 };
 
-let redisPASS = `${process.env.REDIS_PASS}`;
+const redisPASS = `${process.env.REDIS_PASS}`;
 
-if (process.env.REDISCLOUD_URL) {
-  redisURL = url.parse(process.env.REDISCLOUD_URL);
-  [, redisPASS] = redisURL.auth.split(':');
-}
 const redisClient = redis.createClient({
   host: redisURL.hostname,
   port: redisURL.port,
@@ -56,7 +51,6 @@ const io = require('socket.io')(http);
 const socketManager = require('./socket');
 
 const router = require('./router');
-
 
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted`)));
 app.disable('x-powered-by');
